@@ -1,9 +1,7 @@
-#!/usr/bin/python3
+# Lar, Jeff Emerson F.
+# 2019-03845
 
-#Exercise1. Modifiy print_matrix1 function to generate the same matrix found in:
-#https://upload.wikimedia.org/wikipedia/commons/2/28/Smith-Waterman-Algorithm-Example-Step2.png
-#or like sw.PNG
-
+# Function that generates the actual alignment
 def traceback(a,x,y, match_score=3,gap_cost=2):
 	mrows = len(x)
 	ncols = len(y)
@@ -15,8 +13,9 @@ def traceback(a,x,y, match_score=3,gap_cost=2):
 				numMax = a[i][j]
 				indexI = i
 				indexJ = j
-
+	# Sequence list holds traceback
 	sequence = []
+	# Loop that determines where to traceback
 	while(True):
 		maxNum = 0
 		match = a[indexI-1][indexJ-1] - match_score
@@ -27,16 +26,13 @@ def traceback(a,x,y, match_score=3,gap_cost=2):
 		num = max(match,delete,insert,0)
 		if (match == num):
 			sequence.insert(0,0)
-			print("vert")
 			indexI-=1
 			indexJ-=1
 		elif (insert == num):
 			sequence.insert(0,1)
-			print("left")
 			indexJ-=1
 		else:
 			sequence.insert(0,2)
-			print("above")
 			indexI-=1
 		if (a[indexI][indexJ]==0):
 			if (sequence[0]==0):
@@ -47,7 +43,7 @@ def traceback(a,x,y, match_score=3,gap_cost=2):
 			else:
 				indexI+=1
 			break
-	print(sequence)
+	# Printing of alignment
 	for i in range(0,3):
 		indexX = indexI
 		indexY = indexJ
@@ -78,7 +74,7 @@ def traceback(a,x,y, match_score=3,gap_cost=2):
 		print()
 
 
-
+# Printing of matrix
 def print_matrix1(a,x,y):
 	x = " "+x
 	y = " "+y
@@ -108,8 +104,8 @@ def gen_matrix(x, y, match_score=3, gap_cost=2):
 	for i in range(mrows + 1):
 		a[i] = [0] * (ncols + 1)
 	
-	print_matrix1(a,x,y)
-	print()
+	# print_matrix1(a,x,y)
+	# print()
 	
 	for i in range(1,mrows+1):
 		for j in range(1,ncols+1):
@@ -127,9 +123,6 @@ def gen_matrix(x, y, match_score=3, gap_cost=2):
 	
 x = "GGTTGACTA"	
 y = "TGTTACGG"
-
-# y = "ACTGGTAG"
-# x = "GAACTGGATG"
 
 # x = "ATAGACGACAT"
 # y = "TTTAGCATGCGCAT"
