@@ -4,6 +4,81 @@
 #https://upload.wikimedia.org/wikipedia/commons/2/28/Smith-Waterman-Algorithm-Example-Step2.png
 #or like sw.PNG
 
+def traceback(a,x,y, match_score=3,gap_cost=2):
+	mrows = len(x)
+	ncols = len(y)
+	numMax = 0
+	# Find max number in matrix
+	for i in range(1,mrows+1):
+		for j in range(1,ncols+1):
+			if (a[i][j]>numMax):
+				numMax = a[i][j]
+				indexI = i
+				indexJ = j
+
+	sequence = []
+	while(True):
+		maxNum = 0
+		match = a[indexI-1][indexJ-1] - match_score
+		if(x[indexI-1] == y[indexJ-1]):
+			match = a[indexI-1][indexJ-1] + match_score
+		delete = a[indexI - 1][indexJ] - gap_cost
+		insert = a[indexI][indexJ - 1] - gap_cost
+		num = max(match,delete,insert,0)
+		if (match == num):
+			sequence.insert(0,0)
+			print("vert")
+			indexI-=1
+			indexJ-=1
+		elif (insert == num):
+			sequence.insert(0,1)
+			print("left")
+			indexJ-=1
+		else:
+			sequence.insert(0,2)
+			print("above")
+			indexI-=1
+		if (a[indexI][indexJ]==0):
+			if (sequence[0]==0):
+				indexI+=1
+				indexJ+=1
+			elif (sequence[0]==1):
+				indexJ+=1
+			else:
+				indexI+=1
+			break
+	print(sequence)
+	for i in range(0,3):
+		indexX = indexI
+		indexY = indexJ
+		for j in range(0,len(sequence)):
+			if (sequence[j]==0):
+				if (i==0 or i==2):
+					print(x[indexX-1],end="")
+				else:
+					print("|",end="")
+				indexX+=1
+				indexY+=1
+			elif (sequence[j]==1):
+				if (i==0):
+					print("-",end="")
+				elif (i==1):
+					print(" ",end="")
+				else:
+					print(y[indexY-1],end="")
+				indexY+=1
+			else:
+				if (i==0):
+					print(x[indexX-1],end="")
+				elif (i==1):
+					print(" ",end="")
+				else:
+					print("-",end="")
+				indexX+=1
+		print()
+
+
+
 def print_matrix1(a,x,y):
 	x = " "+x
 	y = " "+y
@@ -47,13 +122,22 @@ def gen_matrix(x, y, match_score=3, gap_cost=2):
 
 	print_matrix1(a,x,y)	
 	print()
+
 	return(a)
 	
 x = "GGTTGACTA"	
 y = "TGTTACGG"
 
+# y = "ACTGGTAG"
+# x = "GAACTGGATG"
+
+# x = "ATAGACGACAT"
+# y = "TTTAGCATGCGCAT"
+
 a=gen_matrix(x,y)
 
-print_matrix1(a,x,y)
+traceback(a,x,y)
+
+# print_matrix1(a,x,y)
 
 
