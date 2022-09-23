@@ -56,7 +56,7 @@ def traceback(a,x,y, match_score=3,gap_cost=2):
 				indexX+=1
 				indexY+=1
 			elif (sequence[j]==1):
-				if (i==0):
+				if (i==2):
 					print("-",end="")
 				elif (i==1):
 					print(" ",end="")
@@ -64,7 +64,7 @@ def traceback(a,x,y, match_score=3,gap_cost=2):
 					print(y[indexY-1],end="")
 				indexY+=1
 			else:
-				if (i==0):
+				if (i==2):
 					print(x[indexX-1],end="")
 				elif (i==1):
 					print(" ",end="")
@@ -76,6 +76,7 @@ def traceback(a,x,y, match_score=3,gap_cost=2):
 
 # Printing of matrix
 def print_matrix1(a,x,y):
+
 	x = " "+x
 	y = " "+y
 	mrows = len(x)
